@@ -8,24 +8,41 @@ const port = process.env.PORT || 8000;
 
 app.use(express.static('public'));
 
-const yourAPIKey = process.env.APIKEY;
-const baseURL = process.env.BASE_URL || 'https://api.themoviedb.org/3/';
+const yourAPIKeyTMDB = process.env.APIKEYTMDB;
+const baseURLTMDB = process.env.BASE_URL || 'https://api.themoviedb.org/3/';
+const yourAPIKeyOMDB = process.env.APIKEYOMDB;
+const baseURLOMDB = process.env.BASE_URL || 'http://www.omdbapi.com/';
 
-const config = { 
+const configTMDB = { 
     params: {
         with_original_language: "ne",
-        api_key: yourAPIKey
+        api_key: yourAPIKeyTMDB
     }
 };
 
 app.get("/", async (req, res) => {
   try {
-    const response = await axios.get(baseURL + "discover/movie", config);
+    const response = await axios.get(baseURLTMDB + "discover/movie", configTMDB);
     const movies = response.data.results;
     const randomMovie = movies[Math.floor(Math.random() * movies.length)];
-    res.render("index.ejs", { movie: randomMovie });
+    const movieDetailsTMDB = await axios.get(baseURLTMDB + "movie/" + randomMovie.id, {
+        params: {
+            api_key: yourAPIKeyTMDB
+        }
+    });
+    const imdbId = movieDetailsTMDB.data.imdb_id;
+    if (!imdbId) {
+      return res.status(404).send("IMDb ID not found for this movie");
+    }
+    const movieDetailsOMDB = await axios.get(baseURLOMDB, {
+      params: {
+        i: imdbId,
+        apikey: yourAPIKeyOMDB
+      }
+    });
+    res.render("index.ejs", { movieTMDB: movieDetailsTMDB.data, movieOMDB: movieDetailsOMDB.data });
   } catch (error) {
-    res.status(404).send(error.message);
+    res.status(500).send(error.message);
   }
 });
 
