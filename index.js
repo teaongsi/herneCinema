@@ -20,6 +20,11 @@ const configTMDB = {
     }
 };
 
+app.use( (req, res, next) => {
+    console.log(`Request Method: ${req.method}\nRequest URL: ${req.url}\nRequest Time: ${new Date().toISOString()}`);
+    next();
+});
+
 app.get("/", async (req, res) => {
   try {
     const response = await axios.get(baseURLTMDB + "discover/movie", configTMDB);
