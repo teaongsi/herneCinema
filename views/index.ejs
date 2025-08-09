@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= movieTMDB.title %></title>
+  <link rel="stylesheet" href="/styles/main.css" />
+</head>
+<body>
+  <div class="container">
+    <img 
+      class="poster" 
+      src="https://image.tmdb.org/t/p/w500<%= movieTMDB.poster_path %>" 
+      alt="<%= movieTMDB.title %> poster" 
+    />
+
+    <div class="details">
+      <h1><%= movieTMDB.title %> (<%= movieTMDB.release_date.substring(0,4) %>)</h1>
+
+      <p><strong>Overview:</strong> <%= movieTMDB.overview %></p>
+
+      <p>
+        <strong>Director:</strong> 
+        <% let director = credit.crew.find(c => c.job === "Director"); %>
+        <%= director ? director.name : "Unknown" %>
+      </p>
+
+      <p><strong>Top Cast:</strong></p>
+      <ul>
+        <% credit.cast.slice(0,4).forEach(actor => { %>
+          <li><%= actor.name %></li>
+        <% }) %>
+      </ul>
+
+      <h2>Ratings</h2>
+      <div class="ratings">
+        <p><strong>TMDb User Rating:</strong> <%= movieTMDB.vote_average %> / 10</p>
+
+        <% if (movieOMDB.Ratings && movieOMDB.Ratings.length > 0) { %>
+          <% movieOMDB.Ratings.forEach(function(rating) { %>
+            <p><strong><%= rating.Source %>:</strong> <%= rating.Value %></p>
+          <% }) %>
+        <% } else { %>
+          <p>No external ratings available.</p>
+        <% } %>
+      </div>
+
+      <p><strong>Runtime:</strong> <%= movieTMDB.runtime %> minutes</p>
+      <p><strong>Genres:</strong> <%= movieTMDB.genres.map(g => g.name).join(", ") %></p>
+    </div>
+  </div>
+  <footer class="footer">
+    <p>© <%= new Date().getFullYear() %>Teaongsi Angdembe</p>
+  </footer>
+</body>
+</html>
