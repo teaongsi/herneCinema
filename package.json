@@ -1,0 +1,25 @@
+{
+  "name": "hernecinema",
+  "version": "1.0.0",
+  "description": "A simple website that gives you a random nepali film",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teaongsi/herneCinema.git"
+  },
+  "keywords": [],
+  "author": "teaongsi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/teaongsi/herneCinema/issues"
+  },
+  "homepage": "https://github.com/teaongsi/herneCinema#readme",
+  "dependencies": {
+    "axios": "^1.11.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0"
+  }
+}
