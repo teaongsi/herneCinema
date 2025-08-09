@@ -25,6 +25,11 @@ app.get("/", async (req, res) => {
     const response = await axios.get(baseURLTMDB + "discover/movie", configTMDB);
     const movies = response.data.results;
     const randomMovie = movies[Math.floor(Math.random() * movies.length)];
+    const credits = await axios.get(baseURLTMDB + "movie/" + randomMovie.id + "/credits", {
+        params: {
+            api_key: yourAPIKeyTMDB
+        }
+    });
     const movieDetailsTMDB = await axios.get(baseURLTMDB + "movie/" + randomMovie.id, {
         params: {
             api_key: yourAPIKeyTMDB
@@ -40,7 +45,7 @@ app.get("/", async (req, res) => {
         apikey: yourAPIKeyOMDB
       }
     });
-    res.render("index.ejs", { movieTMDB: movieDetailsTMDB.data, movieOMDB: movieDetailsOMDB.data });
+    res.render("index.ejs", { movieTMDB: movieDetailsTMDB.data, movieOMDB: movieDetailsOMDB.data , credit: credits.data });
   } catch (error) {
     res.status(500).send(error.message);
   }
