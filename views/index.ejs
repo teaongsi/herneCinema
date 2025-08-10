@@ -47,8 +47,6 @@
       <p><strong>Genres:</strong> <%= movieTMDB.genres.map(g => g.name).join(", ") %></p>
     </div>
   </div>
-  <footer class="footer">
-    <p>© <%= new Date().getFullYear() %>Teaongsi Angdembe</p>
-  </footer>
+  <%- include ("footer.ejs")%>
 </body>
 </html>
