@@ -27,9 +27,15 @@ app.use( (req, res, next) => {
     next();
 });
 
-app.get("/", async (req, res) => {
+// Endpoint 1: Homepage
+app.get("/", (req, res) => {
+  res.render("home.ejs");
+});
+
+//Endpoint 2: Random Nepali Movie
+app.get("/random", async (req, res) => {
   try {
-    //Filtere movies from Nepal
+    //Filter movies from Nepal
     const response = await axios.get(baseURLTMDB + "discover/movie", configTMDB);
     const movies = response.data.results;
 

@@ -21,5 +21,5 @@ This is a Node.js Express app that fetches a random Nepali movie from TMDb (The 
 1. Clone this repository.
 2. Create a `.env` file in the root folder
 3. Install dependencies: ` npm i `
-4. Run the app: ` node index.js `
+4. Run the app: ` node app.js `
 5. Open `http://localhost:8000`
